@@ -4,10 +4,12 @@ import { TicketCreatedEvent } from './ticket-created-event';
 import { Subjects } from './subjects';
 
 export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
-  subject: Subjects.TicketCreated = Subjects.TicketCreated;
+  //  subject: Subjects.TicketCreated = Subjects.TicketCreated;
+  readonly subject = Subjects.TicketCreated;
   queueGroupName = 'payments-service';
 
   onMessage(data: TicketCreatedEvent['data'], msg: Message) {
+    // TicketCreatedEvent['data'] will inforce the data type to be from the type TicketCreatedEvent
     console.log('Event data!', data);
 
     console.log(data.id);
