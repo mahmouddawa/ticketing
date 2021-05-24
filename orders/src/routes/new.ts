@@ -32,9 +32,8 @@ router.post('/api/orders',requireAuth,[
     if(!ticket){
       throw new NotFoundError;
     }
-    //Make sure that this ticket is not reserved
-    
-    const isReserved = ticket.isReserved();
+    //Make sure that this ticket is not reserved    
+    const isReserved = await ticket.isReserved();
 
     if(isReserved){
       throw new BadRequestError('Ticket is already reserved');
