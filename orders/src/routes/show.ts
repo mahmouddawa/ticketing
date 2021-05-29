@@ -14,7 +14,7 @@ router.get('/api/orders/:orderId', requireAuth, async (req:Request, res:Response
   if(order.userId!== req.currentUser!.id){
     throw new NotAuthorizedError();
   }
-
+  
   res.send({order});
 });
 
