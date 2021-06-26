@@ -3,9 +3,9 @@ import {Order } from './order';
 import {OrderStatus} from '@moudtickets/common';
 
 interface TicketAttrs {
-  title: string,
-  price: number
-
+  id: string;
+  title: string;
+  price: number;
 }
 
 export interface TicketDoc extends mongoose.Document{
@@ -18,27 +18,34 @@ interface TicketModel extends mongoose.Model<TicketDoc>{
   build(attrs: TicketAttrs):TicketDoc;
 }
 
-const ticketSchema = new mongoose.Schema({
-  title:{
-    type: String,
-    required: true
+const ticketSchema = new mongoose.Schema<TicketDoc>(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+      min: 0, // minimum price of Zero
+    },
   },
-  price:{
-    type:Number,
-    required:true,
-    min: 0 // minimum price of Zero
-  },
-},  {
-  toJSON:{
-    transform(doc,ret){
-      ret.id = ret._id;
-      delete ret._id;
-    }
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+      },
+    },
   }
-});
+);
 
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
-  return new Ticket(attrs)
+  return new Ticket({
+    _id: attrs.id,
+    title: attrs.title,
+    price: attrs.price,
+  });
 };
 ticketSchema.methods.isReserved = async function () {
 // this === the ticket document that we just called "isReserved" on
