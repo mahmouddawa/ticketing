@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import {Order } from './order';
 import {OrderStatus} from '@moudtickets/common';
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 interface TicketAttrs {
   id: string;
@@ -8,14 +9,16 @@ interface TicketAttrs {
   price: number;
 }
 
-export interface TicketDoc extends mongoose.Document{
-  title: string,
-  price: number,
-  isReserved(): Promise<boolean>
+export interface TicketDoc extends mongoose.Document {
+  title: string;
+  price: number;
+  version: number;
+  isReserved(): Promise<boolean>;
 }
 
-interface TicketModel extends mongoose.Model<TicketDoc>{
-  build(attrs: TicketAttrs):TicketDoc;
+interface TicketModel extends mongoose.Model<TicketDoc> {
+  build(attrs: TicketAttrs): TicketDoc;
+  findByEvent(event: { id: string }): Promise<TicketDoc | null>;
 }
 
 const ticketSchema = new mongoose.Schema<TicketDoc>(
@@ -40,6 +43,9 @@ const ticketSchema = new mongoose.Schema<TicketDoc>(
   }
 );
 
+ticketSchema.set("versionKey", "version");
+ticketSchema.plugin(updateIfCurrentPlugin);
+
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket({
     _id: attrs.id,
@@ -47,6 +53,13 @@ ticketSchema.statics.build = (attrs: TicketAttrs) => {
     price: attrs.price,
   });
 };
+ticketSchema.statics.findByEvent = (event: { id: string; version: number }) => {
+  return Ticket.findOne({
+    _id: event.id,
+    version: event.version,
+  });
+};
+
 ticketSchema.methods.isReserved = async function () {
 // this === the ticket document that we just called "isReserved" on
 

@@ -1,3 +1,7 @@
 *node_modules
 client/.next
 .prettierrc
+orders/package-lock.json
+common/package-lock.json
+orders/package-lock.json
+tickets/package-lock.json
