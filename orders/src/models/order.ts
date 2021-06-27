@@ -7,7 +7,6 @@ export {OrderStatus};
 
 interface OrderAttrs {
   userId: string;
-  version: number;
   status: OrderStatus;
   expiresAt: Date;
   ticket: TicketDoc;
@@ -56,8 +55,8 @@ const orderSchema = new mongoose.Schema<OrderDoc>(
   }
 );
 
-// orderSchema.set("versionKey", "version");
-// orderSchema.plugin(updateIfCurrentPlugin);
+ orderSchema.set("versionKey", "version");
+ orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs)

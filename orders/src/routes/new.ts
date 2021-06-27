@@ -47,7 +47,6 @@ router.post('/api/orders',requireAuth,[
     // Build the order and save it to the db
     const order = Order.build({
       userId: req.currentUser!.id,
-      version: 0,
       status: OrderStatus.Created,
       expiresAt: expiration,
       ticket,
@@ -56,7 +55,7 @@ router.post('/api/orders',requireAuth,[
     // Publish an event to let other services know that an order was created
     new OrderCreatedPublisher(natsWrapper.client).publish({
       id: order.id,
-      version: 0,
+      version: order.version,
       status: order.status,
       userId: order.userId,
       expiresAt: order.expiresAt.toISOString(),

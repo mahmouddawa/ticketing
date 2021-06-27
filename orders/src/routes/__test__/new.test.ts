@@ -19,8 +19,9 @@ it('returns an error if the user does not exist', async ()=>{
 
 it('returns an error if the ticket was already reserved', async ()=>{
   const ticket = Ticket.build({
-    title: 'new',
-    price: 20
+    id: mongoose.Types.ObjectId().toHexString(),
+    title: "new",
+    price: 20,
   });
   await ticket.save();
   const order = Order.build({
@@ -41,8 +42,9 @@ it('returns an error if the ticket was already reserved', async ()=>{
 it('reserves a ticket', async()=>{
 
   const ticket = Ticket.build({
-    title: 'new ticket',
-    price: 30
+    id: mongoose.Types.ObjectId().toHexString(),
+    title: "new ticket",
+    price: 30,
   });
   await ticket.save();
   await request(app)
@@ -55,9 +57,10 @@ it('reserves a ticket', async()=>{
 
 it('emits an order created event', async()=>{
   const ticket = Ticket.build({
-    title: 'concert',
-    price: 50
-  })
+    id: mongoose.Types.ObjectId().toHexString(),
+    title: "concert",
+    price: 50,
+  });
   
   await ticket.save();
   await request(app)
