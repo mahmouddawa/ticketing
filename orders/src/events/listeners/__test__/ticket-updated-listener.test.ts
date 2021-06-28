@@ -37,7 +37,6 @@ const setup = async () => {
 
 it("find, updates and saves a ticket", async () => {
   const { listener, ticket, data, msg } = await setup();
-  console.log("the data is ", data, "andd the ticket is ", ticket);
 
   await listener.onMessage(data, msg);
 
