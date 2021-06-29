@@ -6,8 +6,10 @@ const buildClinet = ({ req }) => {
 
     return axios.create({
       baseURL:
-        "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
-      //baseURL: 'http://ingress-nginx.ingress-nginx.svc.cluster.local',
+        //this is local // "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
+        //this is production:
+        "http://www.ticketing-appme.xyz/",
+
       headers: req.headers,
     });
   } else {
