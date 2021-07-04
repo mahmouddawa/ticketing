@@ -5,7 +5,8 @@ import {
   NotFoundError,
   requireAuth,
   NotAuthorizedError,
-} from '@moudtickets/common';
+  BadRequestError,
+} from "@moudtickets/common";
 import { Ticket } from '../models/ticket';
 import {TicketUpdatedPublisher} from '../events/publishers/ticket-update-publisher';
 import {natsWrapper} from '../nats-wrapper';
@@ -27,6 +28,10 @@ router.put(
 
     if (!ticket) {
       throw new NotFoundError();
+    }
+
+    if (ticket.orderId) {
+      throw new BadRequestError("ticket is reserved");
     }
 
     if (ticket.userId !== req.currentUser!.id) {
