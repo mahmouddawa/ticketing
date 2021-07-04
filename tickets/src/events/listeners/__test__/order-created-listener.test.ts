@@ -46,4 +46,14 @@ it("calls the ack message", async () => {
   await listner.onMessage(data, msg);
   expect(msg.ack).toHaveBeenCalled();
 });
-it("", async () => {});
+it("publishes a ticket updated event", async () => {
+  const { listner, ticket, msg, data } = await setup();
+  await listner.onMessage(data, msg);
+  // the publish function will be called 3 times here(two tests before)
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+
+  const mockArray = (natsWrapper.client.publish as jest.Mock).mock.calls;
+  const ticketUpdatedData = JSON.parse(mockArray[mockArray.length - 1][1]);
+
+  expect(data.id).toEqual(ticketUpdatedData.orderId);
+});
