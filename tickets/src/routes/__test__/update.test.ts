@@ -132,23 +132,23 @@ it("can't update a ticket if it was reserved", async()=>{
   const cookie = global.signin();
 
   const response = await request(app)
-    .post('/api/tickets')
-    .set('Cookie', cookie)
+    .post("/api/tickets")
+    .set("Cookie", cookie)
     .send({
-      title: 'asldkfj',
+      title: "asldkfj",
       price: 20,
     });
 
-    const ticket = await Ticket.findById(response.body.id);
-    ticket!.set({orderId: mongoose.Types.ObjectId().toHexString()})
-    await ticket!.save();
+  const ticket = await Ticket.findById(response.body.id);
+  ticket!.set({ orderId: mongoose.Types.ObjectId().toHexString() });
+  await ticket!.save();
+
   await request(app)
     .put(`/api/tickets/${response.body.id}`)
-    .set('Cookie', cookie)
+    .set("Cookie", cookie)
     .send({
-      title: 'new title',
+      title: "new title",
       price: 100,
     })
     .expect(400);
-
 });
