@@ -2,8 +2,10 @@ import mongoose from 'mongoose';
 import { OrderStatus } from '@moudtickets/common';
 import { TicketDoc } from './ticket';
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
+
 export {OrderStatus};
 // this export to have everything related to the order comming from the order model
+
 
 interface OrderAttrs {
   userId: string;
@@ -12,17 +14,16 @@ interface OrderAttrs {
   ticket: TicketDoc;
 }
 
-
 interface OrderDoc extends mongoose.Document {
   userId: string;
-  version: number;
   status: OrderStatus;
   expiresAt: Date;
   ticket: TicketDoc;
+  version: number;
 }
 
-interface orderModel extends mongoose.Model<OrderDoc>{
-  build(atrrs: OrderAttrs):OrderDoc;
+interface OrderModel extends mongoose.Model<OrderDoc> {
+  build(attrs: OrderAttrs): OrderDoc;
 }
 
 const orderSchema = new mongoose.Schema<OrderDoc>(
@@ -55,13 +56,13 @@ const orderSchema = new mongoose.Schema<OrderDoc>(
   }
 );
 
- orderSchema.set("versionKey", "version");
- orderSchema.plugin(updateIfCurrentPlugin);
+orderSchema.set("versionKey", "version");
+orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
-  return new Order(attrs)
-}
+  return new Order(attrs);
+};
 
-const Order = mongoose.model<OrderDoc, orderModel>('Order', orderSchema);
+const Order = mongoose.model<OrderDoc, OrderModel>("Order", orderSchema);
 
-export {Order};
+export { Order };

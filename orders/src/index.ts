@@ -34,6 +34,11 @@ const start = async () => {
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
 
+
+    new TicketCreatedListner(natsWrapper.client).listen();
+    new TicketUpdatedListener(natsWrapper.client).listen();
+
+
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -43,9 +48,6 @@ const start = async () => {
   } catch (err) {
     console.error(err);
   }
-
-  new TicketCreatedListner(natsWrapper.client).listen();
-  new TicketUpdatedListener(natsWrapper.client).listen();
 
   app.listen(3000, () => {
     console.log('Listening on port 3000!!!!!!!!');
