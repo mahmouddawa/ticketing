@@ -12,11 +12,12 @@ const buildClinet = ({ req }) => {
     //     });
     // }else{
       return axios.create({
-        baseURL:
-          //this is local //
-           "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
+        baseURL: "http://www.ticketing-appme.xyz/",
+        //this is local //
+        // "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
+        //"http://ingress-nginx.ingress-nginx.svc.cluster.local",
         headers: req.headers,
-        });
+      });
  //   }
 
   } else {

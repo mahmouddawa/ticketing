@@ -16,7 +16,7 @@ app.use(
   cookieSession({
     signed: false,
     secure: false,
-    //secure: process.env.NODE_ENV !== 'test', // this will fail to do
+    //secure: process.env.NODE_ENV !== "test", // this will fail to do
   })
 );
 
