@@ -26,5 +26,5 @@ spec:
   ports:
     - name: db
       protocol: TCP
-      port: 6370
+      port: 6379
       targetPort: 6379
