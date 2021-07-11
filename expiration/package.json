@@ -19,7 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@moudtickets/common": "^1.0.14",
+    "@moudtickets/common": "^1.0.15",
     "@types/bull": "^3.15.1",
     "bull": "^3.22.10",
     "node-nats-streaming": "^0.2.6",
