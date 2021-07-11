@@ -8,6 +8,7 @@ const buildClinet = ({ req }) => {
 
     return axios.create({
       baseURL: "http://www.ticketing-appme.xyz/",
+
       //process.env.SERVER_URL_BASE,
       //this is local //
       //"http://ingress-nginx-controller.ingress-nginx.svc.cluster.local",
