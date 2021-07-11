@@ -15,7 +15,7 @@ const router = express.Router();
 // can extract this to an environment variable(kubernetes config file)
 //save this number of second to the db and put some kind of web UI that allow an aministrator
 // to change it on the  fly
-const EXPIRATION_WINDOW_SECONDS = 15 * 60;
+const EXPIRATION_WINDOW_SECONDS = 1 * 60;
 
 router.post('/api/orders',requireAuth,[
   body('ticketId')
