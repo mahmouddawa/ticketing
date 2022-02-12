@@ -1,6 +1,6 @@
 # ticketing
 
-this is a microservice application, which share some of the functionality of the well-known website: stubhub.com
+Microservices application, for learning purposes.
 
 still under development...
 
